@@ -1,0 +1,17 @@
+﻿<Window x:Class="ArrangeDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArrangeDesktop"
+        mc:Ignorable="d"
+        Title="ArrangeDesktop" Height="1080" Width="1920" WindowState="Maximized" AllowsTransparency="True" Background="Black" WindowStyle="None">
+    <Canvas Height="1080" Width="1920">
+        <Grid Width="1920" Height="1080">
+            <Button x:Name="btnNewWindow" Content="New Window" Click="btnNewWindow_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="85" Height="25"/>
+            <Button x:Name="btnCloseButton" Content="Close" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnCloseButton_Click" Margin="972,0,888,0"/>
+            <Button x:Name="btnMinimizeButton" Content="Minimize" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnMinimizeButton_Click" Margin="885,0,975,0"/>
+            <Button x:Name="btnTransparent" Content="Transparent" HorizontalAlignment="Left" Margin="922,44,0,0" VerticalAlignment="Top" Width="76" Height="26" Click="btnTransparent_Click"/>
+        </Grid>
+    </Canvas>
+</Window>

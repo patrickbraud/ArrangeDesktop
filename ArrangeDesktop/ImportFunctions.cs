@@ -19,7 +19,7 @@ namespace ArrangeDesktop
         /// <param name="nWidth">New width</param>
         /// <param name="nHeight">New height</param>
         /// <param name="bRepaint">Bool to be repainted</param>
-        /// <returns></returns>
+        /// <returns>if successful?</returns>
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
@@ -40,6 +40,42 @@ namespace ArrangeDesktop
             public int Top;
             public int Right;
             public int Bottom;
+        }
+
+
+        // ----------------- TEST FUNCTIONS ----------------
+
+        public delegate bool WindowEnumCallback(int hwnd, int lparam);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool EnumWindows(WindowEnumCallback lpEnumFunc, int lParam);
+
+        [DllImport("user32.dll")]
+        public static extern void GetWindowText(int h, StringBuilder s, int nMaxCount);
+
+        [DllImport("user32.dll")]
+        public static extern bool IsWindowVisible(int h);
+
+        public static List<string> Windows = new List<string>();
+        public static bool AddWnd(int hwnd, int lparam)
+        {
+            if (IsWindowVisible(hwnd))
+            {
+                StringBuilder sb = new StringBuilder(255);
+                GetWindowText(hwnd, sb, sb.Capacity);
+                if (sb.Length > 0)
+                {
+                    Windows.Add(sb.ToString());
+                }
+            }
+            return true;
+        }
+
+        public static List<string> GetWindows()
+        {
+            EnumWindows(new WindowEnumCallback(AddWnd), 0);
+            return Windows;
         }
     }
 }

@@ -72,6 +72,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OpenWindows.cs" />
     <Compile Include="ProgramWindow.cs">
       <SubType>Form</SubType>
     </Compile>

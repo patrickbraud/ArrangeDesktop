@@ -132,13 +132,36 @@ namespace ArrangeDesktop
                 }
             }
 
+            
             // Add the window names to the dropdown source
             foreach (Process proc in _processList)
             {
-                _dropDownSource.Add(proc.MainWindowTitle);
+                _dropDownSource.Add($"{proc.ProcessName} - {proc.MainWindowTitle}");
             }
 
-            cbProcessDropDown.DataSource = _dropDownSource;
+            //cbProcessDropDown.DataSource = _dropDownSource;
+
+            // TEST SHIT
+            List<IntPtr> windowPtrList = new List<IntPtr>();
+            List<string> windowTitleList = new List<string>();
+            //updatedProcList = ImportFunctions.GetWindows().Where(windowName => !(windowName.Contains("ArrangeDesktop"))).ToList();
+            OpenWindows.GetDesktopWindowHandlesAndTitles(out windowPtrList, out windowTitleList);
+
+            // Associate windows with running processes
+            foreach (Process proc in processList)
+            {
+                // We only want ones that are running window applications
+                foreach(string title in windowTitleList)
+                {
+                    if (proc.MainWindowTitle.Equals(title))
+                    {
+                        _processList.Add(proc);
+                        break;
+                    }
+                }
+            }
+
+            cbProcessDropDown.DataSource = windowTitleList;
         }
 
         /// <summary>
@@ -173,6 +196,7 @@ namespace ArrangeDesktop
         {
             Text = cbProcessDropDown.SelectedItem.ToString();
 
+            // Check each process to see if it matches the selected dropdown item
             Process procToChange = new Process();
             foreach (Process proc in _processList)
             {
@@ -182,11 +206,11 @@ namespace ArrangeDesktop
                 }
             }
 
-            ImportFunctions.RECT rect = new ImportFunctions.RECT();
-            ImportFunctions.GetWindowRect(procToChange.MainWindowHandle, ref rect);
+            ImportFunctions.RECT newWindowRect = new ImportFunctions.RECT();
+            ImportFunctions.GetWindowRect(procToChange.MainWindowHandle, ref newWindowRect);
 
-            Location = new System.Drawing.Point(rect.Left, rect.Top);
-            Size = new System.Drawing.Size(rect.Right - rect.Left, rect.Bottom - rect.Top);
+            Location = new System.Drawing.Point(newWindowRect.Left, newWindowRect.Top);
+            Size = new System.Drawing.Size(newWindowRect.Right - newWindowRect.Left, newWindowRect.Bottom - newWindowRect.Top);
             
         }
 

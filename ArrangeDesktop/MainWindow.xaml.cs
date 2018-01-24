@@ -49,8 +49,6 @@ namespace ArrangeDesktop
 
             newWindow.TopMost = true;
             newWindow.Show();
-
-            _numberOfWindows++;
         }
 
         /// <summary>

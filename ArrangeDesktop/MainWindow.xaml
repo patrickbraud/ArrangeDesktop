@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ArrangeDesktop"
         mc:Ignorable="d"
-        Title="ArrangeDesktop" Height="1080" Width="1920" WindowState="Maximized" AllowsTransparency="True" Background="Black" WindowStyle="None">
+        Title="ArrangeDesktop" WindowState="Maximized" AllowsTransparency="True" Background="Black" WindowStyle="None" Width="1920" Height="1080" StateChanged="MainWindow_StateChanged">
     <Canvas Height="1080" Width="1920">
         <Grid Width="1920" Height="1080">
             <Button x:Name="btnNewWindow" Content="New Window" Click="btnNewWindow_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="85" Height="25"/>

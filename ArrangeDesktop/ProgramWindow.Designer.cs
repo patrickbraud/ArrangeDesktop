@@ -167,9 +167,9 @@
             this.Controls.Add(this.cbProcessDropDown);
             this.Name = "ProgramWindow";
             this.Text = "NewWindow";
-            this.Load += new System.EventHandler(this.NewWindow_Load);
-            this.Move += new System.EventHandler(this.NewWindow_Move);
-            this.Resize += new System.EventHandler(this.NewWindow_Resize);
+            this.Load += new System.EventHandler(this.ProgramWindow_Load);
+            this.Move += new System.EventHandler(this.ProgramWindow_Move);
+            this.Resize += new System.EventHandler(this.ProgramWindow_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 

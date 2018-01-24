@@ -15,10 +15,6 @@ namespace ArrangeDesktop
 {
     public partial class ProgramWindow : Form
     {
-
-        //Controls.
-
-        //Other code
         private List<Process> _processList = new List<Process>();
         private List<string> _dropDownSource = new List<string>();
         private bool _isTransparent = false;
@@ -28,7 +24,7 @@ namespace ArrangeDesktop
             InitializeComponent();
         }
 
-        private void NewWindow_Load(object sender, EventArgs e)
+        private void ProgramWindow_Load(object sender, EventArgs e)
         {
             // Set up the form
             MaximizeBox = false;
@@ -40,7 +36,6 @@ namespace ArrangeDesktop
             FormBorderStyle = FormBorderStyle.Sizable;
             StartPosition = FormStartPosition.CenterScreen;
             TransparencyKey = Color.LimeGreen;
-            //SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
             //Format controls. Note: Controls inherit color from parent form.
             CreateProcessDropdown();
@@ -57,7 +52,7 @@ namespace ArrangeDesktop
         /// </summary>
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments</param>
-        private void NewWindow_Move(object sender, EventArgs e)
+        private void ProgramWindow_Move(object sender, EventArgs e)
         {
             txtPosX.Text = Location.X.ToString();
             txtPosY.Text = Location.Y.ToString();
@@ -68,7 +63,7 @@ namespace ArrangeDesktop
         /// </summary>
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments</param>
-        private void NewWindow_Resize(object sender, EventArgs e)
+        private void ProgramWindow_Resize(object sender, EventArgs e)
         {
             txtWidth.Text = Width.ToString();
             txtHeight.Text = Height.ToString();
@@ -123,14 +118,14 @@ namespace ArrangeDesktop
         {
             Process[] processList = Process.GetProcesses();
             // Get the list of running proccesses
-            foreach (Process proc in processList)
-            {
-                // We only want ones that are running window applications
-                if (!string.IsNullOrEmpty(proc.MainWindowTitle) && !proc.MainWindowTitle.Contains("ArrangeDesktop"))
-                {
-                    _processList.Add(proc);
-                }
-            }
+            //foreach (Process proc in processList)
+            //{
+            //    // We only want ones that are running window applications
+            //    if (!string.IsNullOrEmpty(proc.MainWindowTitle) && !proc.MainWindowTitle.Contains("ArrangeDesktop"))
+            //    {
+            //        _processList.Add(proc);
+            //    }
+            //}
 
             
             // Add the window names to the dropdown source
@@ -144,7 +139,6 @@ namespace ArrangeDesktop
             // TEST SHIT
             List<IntPtr> windowPtrList = new List<IntPtr>();
             List<string> windowTitleList = new List<string>();
-            //updatedProcList = ImportFunctions.GetWindows().Where(windowName => !(windowName.Contains("ArrangeDesktop"))).ToList();
             OpenWindows.GetDesktopWindowHandlesAndTitles(out windowPtrList, out windowTitleList);
 
             // Associate windows with running processes

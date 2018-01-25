@@ -15,7 +15,7 @@ namespace ArrangeDesktop
 {
     public partial class ProgramWindow : Form
     {
-        private List<Process> _processList = new List<Process>();
+        private List<Process> _processWindowList = new List<Process>();
         private List<string> _dropDownSource = new List<string>();
         private bool _isTransparent = false;
 
@@ -76,7 +76,7 @@ namespace ArrangeDesktop
         {
             cbProcessDropDown.Text = "Select Process";
             // Populate the dropdown
-            LoadRunningProcesses();
+            cbProcessDropDown.DataSource = LoadRunningProcesses();
 
             cbProcessDropDown.Width = 200;
 
@@ -94,7 +94,7 @@ namespace ArrangeDesktop
             Text = cbProcessDropDown.SelectedItem.ToString();
 
             Process procToChange = new Process();
-            foreach (Process proc in _processList)
+            foreach (Process proc in _processWindowList)
             {
                 if (proc.MainWindowTitle.Equals(cbProcessDropDown.SelectedItem.ToString()))
                 {
@@ -112,27 +112,12 @@ namespace ArrangeDesktop
         }
 
         /// <summary>
-        /// Refreshes the datasource for the list of running process windows
+        /// Refreshes the dropdown datasource for the list of running process windows
         /// </summary>
-        private void LoadRunningProcesses()
+        private List<string> LoadRunningProcesses()
         {
-            Process[] processList = Process.GetProcesses();
-            // Get the list of running proccesses
-            //foreach (Process proc in processList)
-            //{
-            //    // We only want ones that are running window applications
-            //    if (!string.IsNullOrEmpty(proc.MainWindowTitle) && !proc.MainWindowTitle.Contains("ArrangeDesktop"))
-            //    {
-            //        _processList.Add(proc);
-            //    }
-            //}
-
-            
-            // Add the window names to the dropdown source
-            foreach (Process proc in _processList)
-            {
-                _dropDownSource.Add($"{proc.ProcessName} - {proc.MainWindowTitle}");
-            }
+            List<Process> processList = Process.GetProcesses().ToList();            
+            // Add the window names to the dropdown 
 
             //cbProcessDropDown.DataSource = _dropDownSource;
 
@@ -149,13 +134,13 @@ namespace ArrangeDesktop
                 {
                     if (proc.MainWindowTitle.Equals(title))
                     {
-                        _processList.Add(proc);
+                        _processWindowList.Add(proc);
                         break;
                     }
                 }
             }
 
-            cbProcessDropDown.DataSource = windowTitleList;
+            return windowTitleList;
         }
 
         /// <summary>
@@ -192,7 +177,7 @@ namespace ArrangeDesktop
 
             // Check each process to see if it matches the selected dropdown item
             Process procToChange = new Process();
-            foreach (Process proc in _processList)
+            foreach (Process proc in _processWindowList)
             {
                 if (proc.MainWindowTitle.Equals(cbProcessDropDown.SelectedItem.ToString()))
                 {
@@ -209,13 +194,23 @@ namespace ArrangeDesktop
         }
 
         /// <summary>
+        /// Hide the program window if the go into Window Selection (main window minimizes/hides);
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSelectWindow_Click(object sender, EventArgs e)
+        {
+            Hide();
+        }
+
+        /// <summary>
         /// Refresh the datasource when it closes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void cbProcessDropbdown_close(object sender, EventArgs e)
         {
-            LoadRunningProcesses();
+            cbProcessDropDown.DataSource = LoadRunningProcesses();
         }
 
         /// <summary>

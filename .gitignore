@@ -2,8 +2,5 @@
 *.pdb
 *.baml
 *.Cache
+*.suo
 *.resources
-ArrangeDesktop/bin/Debug/ArrangeDesktop.exe
-ArrangeDesktop/bin/Debug/ArrangeDesktop.pdb
-ArrangeDesktop/obj/Debug/ArrangeDesktop.exe
-ArrangeDesktop/obj/Debug/ArrangeDesktop.pdb

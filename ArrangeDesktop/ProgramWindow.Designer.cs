@@ -40,6 +40,7 @@
             this.lblHeight = new System.Windows.Forms.Label();
             this.btnTransparent = new System.Windows.Forms.Button();
             this.btnSnap = new System.Windows.Forms.Button();
+            this.btnSelectWindow = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cbProcessDropDown
@@ -148,11 +149,23 @@
             this.btnSnap.UseVisualStyleBackColor = false;
             this.btnSnap.Click += new System.EventHandler(this.btnSnap_Click);
             // 
+            // btnSelectWindow
+            // 
+            this.btnSelectWindow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(221)))), ((int)(((byte)(221)))));
+            this.btnSelectWindow.Location = new System.Drawing.Point(80, 223);
+            this.btnSelectWindow.Name = "btnSelectWindow";
+            this.btnSelectWindow.Size = new System.Drawing.Size(120, 30);
+            this.btnSelectWindow.TabIndex = 12;
+            this.btnSelectWindow.Text = "Select Window";
+            this.btnSelectWindow.UseVisualStyleBackColor = false;
+            this.btnSelectWindow.Click += new System.EventHandler(this.btnSelectWindow_Click);
+            // 
             // ProgramWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.btnSelectWindow);
             this.Controls.Add(this.btnSnap);
             this.Controls.Add(this.btnTransparent);
             this.Controls.Add(this.lblHeight);
@@ -189,5 +202,6 @@
         private System.Windows.Forms.Label lblHeight;
         private System.Windows.Forms.Button btnTransparent;
         private System.Windows.Forms.Button btnSnap;
+        private System.Windows.Forms.Button btnSelectWindow;
     }
 }

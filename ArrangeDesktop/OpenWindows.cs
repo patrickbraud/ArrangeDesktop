@@ -27,14 +27,14 @@ namespace ArrangeDesktop
         private delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
         // Save window titles and handles in these lists.
-        public static List<IntPtr> WindowHandles;
-        public static List<string> WindowTitles;
+        private static List<IntPtr> _windowHandles;
+        private static List<string> _windowTitles;
 
         // Return a list of the desktop windows' handles and titles.
         public static void GetDesktopWindowHandlesAndTitles(out List<IntPtr> handles, out List<string> titles)
         {
-            WindowHandles = new List<IntPtr>();
-            WindowTitles = new List<string>();
+            _windowHandles = new List<IntPtr>();
+            _windowTitles = new List<string>();
 
             if (!EnumDesktopWindows(IntPtr.Zero, FilterCallback, IntPtr.Zero))
             {
@@ -43,8 +43,8 @@ namespace ArrangeDesktop
             }
             else
             {
-                handles = WindowHandles;
-                titles = WindowTitles;
+                handles = _windowHandles;
+                titles = _windowTitles;
             }
         }
 
@@ -60,8 +60,8 @@ namespace ArrangeDesktop
             // If the window is visible and has a title, save it.
             if (IsWindowVisible(hWnd) && !string.IsNullOrEmpty(title) && !title.Contains("ArrangeDesktop"))
             {
-                WindowHandles.Add(hWnd);
-                WindowTitles.Add(title);
+                _windowHandles.Add(hWnd);
+                _windowTitles.Add(title);
             }
 
             // Return true to indicate that we

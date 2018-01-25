@@ -26,8 +26,8 @@ namespace ArrangeDesktop
         /// </summary>
         public List<ProgramWindow> WindowList = new List<ProgramWindow>();
 
-        private int _numberOfWindows = 0;
         private bool _isTansparent = false;
+        private bool _selectWindowActivated = false;
 
         public MainWindow()
         {
@@ -39,13 +39,19 @@ namespace ArrangeDesktop
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnNewWindow_Click(object sender, RoutedEventArgs e)
+        private void btnNewWindow_Click(object sender, EventArgs e)
         {
             ProgramWindow newWindow = new ProgramWindow();
             WindowList.Add(newWindow);
 
             newWindow.FormClosed += new FormClosedEventHandler(ProgramWindow_Closed);
-            
+
+            // Create another click event for the Select Window button for our new ProgramWindow
+            System.Windows.Forms.Control selectWindowButton = newWindow.Controls.Find("btnSelectWindow", false).FirstOrDefault();
+            if (selectWindowButton != null)
+            {
+                selectWindowButton.Click += SelectWindowActivated;
+            }
 
             newWindow.TopMost = true;
             newWindow.Show();
@@ -66,7 +72,7 @@ namespace ArrangeDesktop
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnCloseButton_Click(object sender, RoutedEventArgs e)
+        private void btnCloseButton_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -76,7 +82,7 @@ namespace ArrangeDesktop
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnMinimizeButton_Click(object sender, RoutedEventArgs e)
+        private void btnMinimizeButton_Click(object sender, EventArgs e)
         {
             WindowState = WindowState.Minimized;
 
@@ -92,7 +98,7 @@ namespace ArrangeDesktop
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnTransparent_Click(object sender, RoutedEventArgs e)
+        private void btnTransparent_Click(object sender, EventArgs e)
         {            
             if (_isTansparent)
             {
@@ -109,6 +115,18 @@ namespace ArrangeDesktop
         }
 
         /// <summary>
+        /// The 'Select Window' button on an open ProgramWindow has been selected. 
+        /// Make the main window transparent and prepare for mouse hover shit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectWindowActivated(object sender, EventArgs e)
+        {
+            _selectWindowActivated = true;
+            btnTransparent_Click(sender, e);
+        }
+
+        /// <summary>
         /// Gets triggered when the main window is maximized. If our windows are hidden, sets the to visible
         /// </summary>
         /// <param name="sender"></param>
@@ -119,11 +137,15 @@ namespace ArrangeDesktop
             {
                 foreach (ProgramWindow ourWindow in WindowList)
                 {
-                    if (ourWindow.Visible == false)
+                    if (ourWindow.Visible == false && !_selectWindowActivated)
                     {
                         ourWindow.Show();
                     }
                 }
+            }
+            else if (WindowState.Equals(WindowState.Minimized))
+            {
+                // Do Stuff Here
             }
         }
     }
